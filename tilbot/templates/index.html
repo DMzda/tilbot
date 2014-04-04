@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}TIL{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="/">
+        <h1 class="text-center">TIL</h1>
+    </a>
+    <table class="table table-hover table-condensed table-striped table-bordered">
+        <tbody>
+        {% for comment in comments.items %}
+            <tr>
+                <td class="text-right"><a href={{ "http://www.reddit.com/user/" + comment.author.name }}>
+                    {{ "/u/" + comment.author.name }} </a> in
+                    <a href={{ "http://www.reddit.com/r/" + comment.subreddit }}>
+                    {{ "/r/" + comment.subreddit }} </a></td>
+                <td class="text-center date"><a href={{ comment.permalink + "?context=3" }}>
+                    {{ comment.timestamp }}</a></td>
+                <td>{{ comment.body }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if comments.has_prev %}
+    <a href={{ url_for("index", page=comments.prev_num) }} >
+                    <<
+    </a>
+    {% endif %}
+
+    {% for page in range(1, comments.pages + 1) %}
+
+    {% if page == comments.page %}
+    <strong> {{ page }} </strong>
+    {% else %}
+    <a href={{ url_for("index", page=page) }}>
+                    {{ page }}
+    </a>
+    {% endif %}
+
+    {% endfor %}
+
+    {% if comments.has_next %}
+    <a href={{ url_for("index", page=comments.next_num) }}>
+                    >>
+    </a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+Generic single-database configuration.
+
+a242cc1f12: Initial database
+574b7a7cc20: Added subreddit column to comments table
